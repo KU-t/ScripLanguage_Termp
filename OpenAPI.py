@@ -6,6 +6,10 @@ from tkinter import font
 from tkinter import ttk
 from tkinter import messagebox
 
+import smtplib
+from email.mime.text import MIMEText
+
+
 decode_key = unquote('xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2FEgAKR09JsMDhLWpLdyHpYibXU0bQ%3D%3D')
 url = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonAcctoKindAreaPeriodInfo'
 queryParams = '?' + urlencode({ quote_plus('ServiceKey'): decode_key, quote_plus('pageNo')
@@ -37,11 +41,6 @@ window.title("☏ 폰파인더 ☏")
 normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
-# size test
-canvas = Canvas(window, bg="white", width= 500, height= 400)
-canvas.place(x=20,y=150)
-
-
 
 def TotalSearchButton():
     ButtonText = Button(window,text='검색하기',font=boldFont, width= 120, height = 45,command=NewEmailWindow)
@@ -49,6 +48,23 @@ def TotalSearchButton():
     ButtonText.img = logo.subsample(5, 5)
     ButtonText.config(image=ButtonText.img, compound=LEFT)
     ButtonText.place(x=330, y=20) #place사용시 pack제외
+
+
+def CheckSortButton():
+    ButtonText = Button(window,text='정렬하기',font=boldFont, width= 120, height = 45,command=NewEmailWindow)
+    logo = PhotoImage(file='graph.gif')
+    ButtonText.img = logo.subsample(7, 5)
+    ButtonText.config(image=ButtonText.img, compound=LEFT)
+    ButtonText.place(x=470, y=20) #place사용시 pack제외
+
+    Variety01=IntVar()
+    Variety02=IntVar()
+
+    checkbutton1=Checkbutton(window, text="제조사 정렬", variable=Variety01, activebackground="yellow")
+    checkbutton2=Checkbutton(window, text="습득일자 정렬", variable=Variety02, activebackground="pink")
+
+    checkbutton1.place(x=620, y=20)
+    checkbutton2.place(x=620, y=45)
 
 
 def SearchAreaBoc():
@@ -68,7 +84,6 @@ def SearchBrandBoc():
 
     BrandComBox = ttk.Combobox(window, width=12, height=15, textvariable=str)
     BrandComBox['values'] = ('애플', '삼성', 'LG', '샤오미', '소니', '베가', '펜택', '기타')
-
     BrandComBox.grid(column=0, row=0)
     BrandComBox.current(0)
     BrandComBox.place(x=210, y=84)
@@ -84,7 +99,6 @@ def SearchColorBoc():
     ColorComBox = ttk.Combobox(window, width=12, height=15, textvariable=str)
     ColorComBox['values'] = ('블랙', '화이트', '그레이', '골드', '실버', '레드'
                              , '옐로우', '블루', '핑크', '기타')
-
     ColorComBox.grid(column=0, row=0)
     ColorComBox.current(0)
     ColorComBox.place(x=370, y=84)
@@ -129,20 +143,42 @@ def InitSearchYMD():
     SearchEndDayEntry.pack()
     SearchEndDayEntry.place(x=SearchEndEntryPos[0] + 100, y=SearchEndEntryPos[1] + 20)
 
+
+
+# Email Preparing
 def EmailButton():
     global EmailButton
-    EmailButton = Button(window,text='메일전송',font=boldFont,command=NewEmailWindow)
+    EmailButton = Button(window,text='메일전송',font=boldFont,command=NewCheckTkinter)
     logo = PhotoImage(file='mail.gif')
     EmailButton.img = logo.subsample(12, 12)
     EmailButton.config(image=EmailButton.img, compound=LEFT)
     EmailButton.place(x=820, y=580)
 
+def NewCheckTkinter():
+    miniWindow=Toplevel(window)
+    miniWindow.geometry("320x160")
+    miniWindow.title("메일 입력창")
+    miniWindow.configure(background='pink')
 
-def NewEmailWindow():
-    messagebox.showinfo("알림창,테스트창~", message="준비 중입니다^_^")
+    label= Label(miniWindow, text = "메일을 입력해주세요♡",font = normalFont)
+    label.place(x=75,y=30)
 
+    EmailEntry = Entry(miniWindow, width=14)
+    EmailEntry.place(x=50,y=85)
 
+    EmailComBox = ttk.Combobox(miniWindow, width=12, height=15, textvariable=str)
+    EmailComBox['values'] = ('naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hanmail.net', 'kpu.ac,kr'
+                             ,'기타')
 
+    EmailComBox.grid(column=0, row=0)
+    EmailComBox.current(0)
+    EmailComBox.place(x=160, y=85)
+    EmailComBox.set("메일선택")
+
+    EmailSend = Button(miniWindow, text='메일전송', command=NewEmailWindow)
+    EmailSend.place(x=230, y= 120)
+
+# map Preparing
 def mapButton():
     global MapButton
     MapButton = Button(window,text='지도보기',font=boldFont,command=NewEmailWindow)
@@ -151,6 +187,7 @@ def mapButton():
     MapButton.config(image=MapButton.img, compound=LEFT)
     MapButton.place(x=650, y=580)
 
+# Image Preparing
 def ImageButton():
     global ImageButton
     ImageButton = Button(window,text='사진보기',font=boldFont,command=NewEmailWindow)
@@ -159,8 +196,12 @@ def ImageButton():
     ImageButton.config(image=ImageButton.img, compound=LEFT)
     ImageButton.place(x=480, y=580)
 
+#함수 잘 불리는지 테스트 창
+def NewEmailWindow():
+    messagebox.showinfo("알림창,테스트창~", message="준비 중입니다^_^")
 
 def main():
+    CheckSortButton()
     ImageButton()
     mapButton()
     EmailButton()
