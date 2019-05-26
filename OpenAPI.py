@@ -33,6 +33,8 @@ window.title("☏ 폰파인더 ☏")
 normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
+imageurl = "이미지가 없습니다."
+
 def InitTopText():
     pass
     #TempFont = font.Font(window, size = 20, weight = 'bold', family = 'Consolas')
@@ -190,6 +192,31 @@ def OpenDetailURL(qeueryp):
                 "\n"+uniq
     DetailEntry.insert(END,totaltext)
 
+    if imageurl == "이미지가 없습니다.":
+        imagelabel = Label(window, height=200, width=420)
+        phoneimage = PhotoImage(file='image.gif')
+        imagelabel.img = phoneimage.subsample(1, 2)
+        imagelabel.config(image=imagelabel.img, compound=LEFT)
+        print(type(imagelabel.img))
+
+    else:
+        with urllib.request.urlopen(imageurl) as u:
+            raw_data = u.read()
+        im = Image.open(BytesIO(raw_data))
+        phoneimage = ImageTk.PhotoImage(im)
+
+        width = phoneimage.width()
+        height = phoneimage.height()
+
+        imagelabel = Label(window, image=phoneimage, height=200, width=420)
+        imagelabel.place(x=500, y=170)
+        print(type(imagelabel.img))
+
+
+    print(imageurl)
+    imagelabel.place(x=500, y=170)
+
+
 def OpenURL(queryp):
 
     global ResultForDetail
@@ -245,8 +272,8 @@ def onselect(evt):
 def InitDetailWindow():
     global DetailEntry
     DFont = font.Font(window, size=10, family='Consolas')
-    DetailEntry = Text(window, font = DFont, width = 48, height = 9)
-    DetailEntry.place(x= 600 , y= 400)
+    DetailEntry = Text(window, font = DFont, width = 60, height = 9)
+    DetailEntry.place(x= 500 , y= 400)
 
 
 def initPageButton():
@@ -264,8 +291,6 @@ def initPageButton():
 
 
 def ShowImage():
-
-
     with urllib.request.urlopen(imageurl) as u:
         raw_data = u.read()
     im = Image.open(BytesIO(raw_data))
@@ -281,6 +306,24 @@ def ShowImage():
     imagelabel.place(x=0, y=0)
     popimage.mainloop()
 
+def InitImage():
+
+    global imageurl
+
+    if imageurl == "이미지가 없습니다.":
+        phoneimage = PhotoImage(file='image.gif')
+
+    else:
+       with urllib.request.urlopen(imageurl) as u:
+           raw_data = u.read()
+           openimage = Image.open(BytesIO(raw_data))
+           phoneimage = ImageTk.PhotoImage(openimage)
+
+    print(imageurl)
+    imagelabel = Button(window, height=200, width=420)
+    imagelabel.img = phoneimage.subsample(1, 2)
+    imagelabel.config(image=imagelabel.img, compound=LEFT)
+    imagelabel.place(x=500, y=170)
 
 
 def InitOtherButton():
@@ -402,6 +445,7 @@ def InitButtons():
     InitModelName()  # 검색 버튼
     CheckSortButton()  # 정렬버튼
     initPageButton()  # 페이지 버튼
+
 
 def main():
     InitButtons()
