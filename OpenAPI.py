@@ -35,11 +35,6 @@ boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
 imageurl = "이미지가 없습니다."
 
-def InitTopText():
-    pass
-    #TempFont = font.Font(window, size = 20, weight = 'bold', family = 'Consolas')
-    #MainText =Label(window, font = TempFont , text = "핸드폰아 어디있니~?")
-    #MainText.place(x = 280 , y= 0)
 
 def InitSearchAreaBox():
 
@@ -193,7 +188,7 @@ def OpenDetailURL(qeueryp):
     DetailEntry.insert(END,totaltext)
 
     if imageurl == "이미지가 없습니다.":
-        imagelabel = Label(window, height=200, width=420)
+        imagelabel = Label(window, height=220, width=420)
         phoneimage = PhotoImage(file='image.gif')
         imagelabel.img = phoneimage.subsample(1, 2)
         imagelabel.config(image=imagelabel.img, compound=LEFT)
@@ -208,7 +203,7 @@ def OpenDetailURL(qeueryp):
         width = phoneimage.width()
         height = phoneimage.height()
 
-        imagelabel = Label(window, image=phoneimage, height=200, width=420)
+        imagelabel = Label(window, image=phoneimage, height=220, width=420)
         imagelabel.place(x=500, y=170)
         print(type(imagelabel.img))
 
@@ -235,12 +230,13 @@ def OpenURL(queryp):
     body = root[1]
     items = body[0]
 
-    i =0 ;
+    i =0
     ResultForDetail = {}
     ResultList.delete(0, END)
+
     for item in items:
         ResultForDetail[i] = {'id':item.findtext('atcId'),'num':item.findtext('fdSn')}#id, 순번
-        ResultList.insert(i,item.findtext('fdSbjt'))
+        ResultList.insert(i, item.findtext('fdSbjt'))
         i+=1
     return body.findtext('totalCount')
 
@@ -249,20 +245,50 @@ def InitResultList():
     global ResultList
     global querye
     ResultBoxScrollbar = Scrollbar(window)
-    ResultBoxScrollbar.place(x = 365, y = 170,width = 20, height = 370)
+    ResultBoxScrollbar.place(x = 420, y = 170,width = 20, height = 400)
 
 
     ListBoxHorizon = Scrollbar(window, orient = "horizontal")
-    ListBoxHorizon.place(x = 20, y  =540, width = 350, height = 20)
+    ListBoxHorizon.place(x = 20, y  =550, width = 390, height = 20)
 
-    ResultList = Listbox(window, font = normalFont, width = 42, height = 19,
+
+    ResultList = Listbox(window, font = normalFont, width = 44, height = 17,
                          yscrollcommand=ResultBoxScrollbar.set,
                          xscrollcommand= ListBoxHorizon.set )
+
     ResultList.place(x= 20, y = 170)
     ResultList.bind('<<ListboxSelect>>',onselect)
 
     ResultBoxScrollbar.config(command=ResultList.yview)
     ListBoxHorizon.config(command= ResultList.xview)
+
+    ResultListText = Label(window, text="[검색 결과를 확인하세요]", font=normalFont)
+    ResultListText.place(y=135,x=20)
+
+    ImageText = Label(window, text="[핸드폰 이미지]", font=normalFont)
+    ImageText.place(x=500, y =135)
+
+    ImageText = Label(window, text="[디데일 정보]", font=normalFont)
+    ImageText.place(x=500, y=372)
+
+
+    ResultImage = Listbox(window, font=normalFont, width=47, height=9,
+                         yscrollcommand=ResultBoxScrollbar.set,
+                         xscrollcommand=ListBoxHorizon.set)
+
+    ResultImage.place(x=500, y=170)
+
+    ImagePhone = PhotoImage (file="phone1.png")
+    label = Label(window, image =ImagePhone, height= 140, width=110)
+    label.place(x=800,y=10)
+
+    label.img = ImagePhone.subsample(1, 2)
+    label.config(image=label.img)
+    print(type(label.img))
+
+
+
+
 
 def onselect(evt):
     w= evt.widget
@@ -378,6 +404,7 @@ def sendEmail():
     s.close()
     popip.destroy()
 
+
 def EMailButton():
     global popip
     global emailaddress
@@ -422,15 +449,16 @@ def SearchButton():
     ED = SearchEndDayEntry.get()
     if (int(ED) < 10): ED = "0" + ED
 
-    startymd = SY + SM + SD
-    endymd = EY + EM + ED
+    startyear = SY + SM + SD
+    endyear = EY + EM + ED
     brand = BrandEntry.get()
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
-              'start': startymd, 'end': endymd, 'Brand': BrandCode[brand],
+              'start': startyear, 'end': endyear, 'Brand': BrandCode[brand],
               'page': pageNum, 'numOfRows': 20}
+
     totalnum = int(OpenURL(queryp))
     totalpage = int(totalnum / 20)
     paget = str(pageNum) +"/"+ str(totalpage)
