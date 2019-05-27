@@ -230,12 +230,13 @@ def OpenURL(queryp):
     body = root[1]
     items = body[0]
 
-    i =0 ;
+    i =0
     ResultForDetail = {}
     ResultList.delete(0, END)
+
     for item in items:
         ResultForDetail[i] = {'id':item.findtext('atcId'),'num':item.findtext('fdSn')}#id, 순번
-        ResultList.insert(i,item.findtext('fdSbjt'))
+        ResultList.insert(i, item.findtext('fdSbjt'))
         i+=1
     return body.findtext('totalCount')
 
@@ -277,12 +278,12 @@ def InitResultList():
 
     ResultImage.place(x=500, y=170)
 
-    ImagePhone = PhotoImage (file="phone.gif")
+    ImagePhone = PhotoImage (file="phone1.png")
     label = Label(window, image =ImagePhone, height= 140, width=110)
     label.place(x=800,y=10)
 
     label.img = ImagePhone.subsample(1, 2)
-    label.config(image=label.img, compound=LEFT)
+    label.config(image=label.img)
     print(type(label.img))
 
 
@@ -403,6 +404,7 @@ def sendEmail():
     s.close()
     popip.destroy()
 
+
 def EMailButton():
     global popip
     global emailaddress
@@ -447,15 +449,16 @@ def SearchButton():
     ED = SearchEndDayEntry.get()
     if (int(ED) < 10): ED = "0" + ED
 
-    startymd = SY + SM + SD
-    endymd = EY + EM + ED
+    startyear = SY + SM + SD
+    endyear = EY + EM + ED
     brand = BrandEntry.get()
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
-              'start': startymd, 'end': endymd, 'Brand': BrandCode[brand],
+              'start': startyear, 'end': endyear, 'Brand': BrandCode[brand],
               'page': pageNum, 'numOfRows': 20}
+
     totalnum = int(OpenURL(queryp))
     totalpage = int(totalnum / 20)
     paget = str(pageNum) +"/"+ str(totalpage)

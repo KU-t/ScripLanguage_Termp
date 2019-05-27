@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0728dda7-9e79-4901-b273-fb0e2bf3f32e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/SLTermp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SLTermp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenAPI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/OpenAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="262" lean-forward="true" selection-start-line="262" selection-end-line="262" />
+            <state relative-caret-position="-5092">
+              <caret line="86" column="38" lean-forward="true" selection-start-line="86" selection-start-column="38" selection-end-line="86" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -39,6 +36,8 @@
       <find>ColorEntry</find>
       <find>AreaEntry</find>
       <find>imagelabel</find>
+      <find>ResultForDetail</find>
+      <find>fdSbjt</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -54,9 +53,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="162" />
-    <option name="y" value="3" />
-    <option name="width" value="1354" />
+    <option name="x" value="239" />
+    <option name="y" value="127" />
+    <option name="width" value="1302" />
     <option name="height" value="1100" />
   </component>
   <component name="ProjectView">
@@ -180,9 +179,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="162" y="3" width="1354" height="1100" extended-state="0" />
+    <frame x="239" y="127" width="1302" height="1100" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23243648" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24183515" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -219,8 +218,8 @@
     <entry file="file://$PROJECT_DIR$/OpenAPI2.py" />
     <entry file="file://$PROJECT_DIR$/OpenAPI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="262" lean-forward="true" selection-start-line="262" selection-end-line="262" />
+        <state relative-caret-position="-5092">
+          <caret line="86" column="38" lean-forward="true" selection-start-line="86" selection-start-column="38" selection-end-line="86" selection-end-column="38" />
         </state>
       </provider>
     </entry>
