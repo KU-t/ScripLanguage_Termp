@@ -183,7 +183,7 @@ def OpenDetailURL(qeueryp):
     fdYmd = "습득일자      : " +  item.findtext('fdYmd') + "\n"
     tel = "전화번호      : " +  item.findtext('tel') + "\n"
     uniq = item.findtext('uniq')
-    totaltext = imageurl +"\n\n"+ csteSteNm + depPlace + fdPlace + model + fdYmd + tel + \
+    totaltext = csteSteNm + depPlace + fdPlace + model + fdYmd + tel + \
                 "\n"+uniq
     DetailEntry.insert(END,totaltext)
 
