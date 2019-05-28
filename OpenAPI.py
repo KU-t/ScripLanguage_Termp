@@ -14,12 +14,17 @@ import folium
 import webbrowser
 import os
 
+
+
 import xml.etree.ElementTree as etree
 from xml.dom.minidom import parse,parseString
+
 
 urlArea = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonAcctoKindAreaPeriodInfo'
 urlDetail = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonDetailInfo'
 key = unquote("xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2FEgAKR09JsMDhLWpLdyHpYibXU0bQ%3D%3D")
+
+
 
 BrandCode = {'삼성': "PRJ100", '엘지': "PRJ200", '스카이': "PRJ300", '아이폰': "PRJ400", '기타': "PRJ500"}
 ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005", '초록': "CL1006",
@@ -28,6 +33,8 @@ AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
             '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000",
             '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
             '충청남도': "LCN000", '충청북도': "LCO000"}
+
+
 
 POSITIONCode = [
     ['﻿가평경찰서', 37.8253995, 127.514911],
@@ -74,6 +81,7 @@ POSITIONCode = [
     ['하남경찰서', 37.5227417, 127.2246128],
     ['화성서부경찰서', 37.1762931, 126.8125367]
 ]
+
 
 
 window = Tk()
@@ -191,24 +199,7 @@ def InitModelName(): #검색버튼
     logo = PhotoImage(file='search.gif')
     SearchButton.img = logo.subsample(5, 5)
     SearchButton.config(image=SearchButton.img, compound=LEFT)
-    SearchButton.place(x=330, y=20)  # place사용시 pack제외
-
-
-def CheckSortButton(): #정렬버튼 구현안댐!@!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
-    ButtonText = Button(window,text='정렬하기',font=boldFont, width= 120, height = 45,command=SearchButton)
-    logo = PhotoImage(file='graph.gif')
-    ButtonText.img = logo.subsample(7, 5)
-    ButtonText.config(image=ButtonText.img, compound=LEFT)
-    ButtonText.place(x=470, y=20) #place사용시 pack제외
-
-    Variety01=IntVar()
-    Variety02=IntVar()
-
-    checkbutton1=Checkbutton(window, text="제조사 정렬", variable=Variety01, activebackground="yellow")
-    checkbutton2=Checkbutton(window, text="습득일자 정렬", variable=Variety02, activebackground="pink")
-
-    checkbutton1.place(x=620, y=20)
-    checkbutton2.place(x=620, y=45)
+    SearchButton.place(x=500, y=50)  # place사용시 pack제외
 
 def OpenDetailURL(qeueryp):
     global position
@@ -427,13 +418,12 @@ def InitOtherButton():
 
 def sendEmail():
 
-
     import mimetypes
     import smtplib
     from email.mime.base import MIMEBase
     from email.mime.text import MIMEText
 
-    smtpHost = "smtp.gmail.com"
+    smtpHost ="smtp.gmail.com"
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
     msg = MIMEText(text)
@@ -480,6 +470,7 @@ def EMailButton():
     EmailSend = Button(popip, text='메일전송', command=sendEmail)
     EmailSend.place(x=230, y=120)
 
+
 def MapButton():
     global position
     global file
@@ -499,7 +490,7 @@ def MapButton():
     if posx != -1 and posy != -1:
         map = folium.Map(location=[posx, posy], zoom_start=13)
         folium.Marker([posx, posy], popup=position).add_to(map)
-        file = 'C:\\Users\\태균\\Desktop\\2019-1\\Script_Language\\SLTermp\\map.html'
+        file = 'D:\\4Grade1Semester\\ScriptLanguage\\map.html'
 
         map.save(file)
         print(type(map))
@@ -546,17 +537,14 @@ def InitButtons():
     InitSearchYMD()  # 기간 버튼
     InitSearchColorBox()  # 색 버튼
     InitModelName()  # 검색 버튼
-    CheckSortButton()  # 정렬버튼
     initPageButton()  # 페이지 버튼
 
 
 def main():
     InitButtons()
-
     InitResultList()        #결과창
     InitDetailWindow()      #상세정보 window
     window.mainloop()
-
 
 main()
 os.remove(file)
