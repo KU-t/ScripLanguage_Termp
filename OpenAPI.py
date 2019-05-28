@@ -10,7 +10,9 @@ import urllib.request
 from PIL import Image, ImageTk
 from io import BytesIO
 
-
+import folium
+import webbrowser
+import os
 
 import xml.etree.ElementTree as etree
 from xml.dom.minidom import parse,parseString
@@ -26,6 +28,53 @@ AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
             '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000",
             '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
             '충청남도': "LCN000", '충청북도': "LCO000"}
+
+POSITIONCode = [
+    ['﻿가평경찰서', 37.8253995, 127.514911],
+    ['경기남부지방경찰청', 37.2941531, 127.0334451],
+    ['경기북부지방경찰청', 37.7560662, 127.0698444],
+    ['일산경찰서', 37.6647674, 126.7695768],
+    ['고양경찰서', 37.6283005, 126.8295943],
+    ['과천경찰서', 37.4291373, 126.9898326],
+    ['광명경찰서', 37.4739848, 126.8679017],
+    ['광주경찰서', 37.4082228, 127.2396699],
+    ['구리경찰서', 37.5871136, 127.1290086],
+    ['군포경찰서', 37.3603903, 126.9362838],
+    ['김포경찰서', 37.6369103, 126.6817472],
+    ['남양주경찰서', 37.6116123, 127.1714532],
+    ['동두천경찰서', 37.9103817, 127.0459792],
+    ['부천원미경찰서', 37.5024622, 126.7773319],
+    ['부천소사경찰서', 37.4803963, 126.7723898],
+    ['부천오정경찰서', 37.514514, 126.8002796],
+    ['분당경찰서', 37.3650589, 127.1053817],
+    ['성남수정경찰서', 37.4419936, 127.1266515],
+    ['성남중원경찰서', 37.442382, 127.1698186],
+    ['수원남부경찰서', 37.2720438, 127.0540236],
+    ['수원서부경찰서', 37.2585174, 126.9723444],
+    ['수원중부경찰서', 37.297788, 126.9965885],
+    ['시흥경찰서', 37.3762247, 126.7879168],
+    ['안산상록경찰서', 37.2993135, 126.8448789],
+    ['안산단원경찰서', 37.3216184, 126.8288569],
+    ['안성경찰서', 37.0001607, 127.2488803],
+    ['안양만안경찰서', 37.3870272, 126.9263686],
+    ['안양동안경찰서', 37.3911121, 126.9486444],
+    ['양주경찰서', 37.840583, 127.0540159],
+    ['양평경찰서', 37.4881114, 127.4904838],
+    ['여주경찰서', 37.2934968, 127.63491],
+    ['연천경찰서', 38.0981369, 127.0738946],
+    ['화성동부경찰서', 37.1536951, 127.0821651],
+    ['용인서부경찰서', 37.3092308, 127.1065466],
+    ['용인동부경찰서', 37.2412407, 127.1810948],
+    ['의왕경찰서', 37.3505919, 126.9681764],
+    ['의정부경찰서', 37.7441764, 127.0442602],
+    ['이천경찰서', 37.2734108, 127.4349884],
+    ['파주경찰서', 37.7534211, 126.7785467],
+    ['평택경찰서', 36.9946071, 127.0909191],
+    ['포천경찰서', 37.8936394, 127.2047452],
+    ['하남경찰서', 37.5227417, 127.2246128],
+    ['화성서부경찰서', 37.1762931, 126.8125367]
+]
+
 
 window = Tk()
 window.geometry("1000x650")  #window size
@@ -162,6 +211,8 @@ def CheckSortButton(): #정렬버튼 구현안댐!@!@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     checkbutton2.place(x=620, y=45)
 
 def OpenDetailURL(qeueryp):
+    global position
+
     DetailEntry.delete('1.0', END)
     query = '?' + urlencode({quote_plus('ServiceKey'): key,
                              quote_plus('ATC_ID'): qeueryp['id'],
@@ -183,6 +234,8 @@ def OpenDetailURL(qeueryp):
     fdYmd = "습득일자      : " +  item.findtext('fdYmd') + "\n"
     tel = "전화번호      : " +  item.findtext('tel') + "\n"
     uniq = item.findtext('uniq')
+    position = uniq[7:]
+
     totaltext = csteSteNm + depPlace + fdPlace + model + fdYmd + tel + \
                 "\n"+uniq
     DetailEntry.insert(END,totaltext)
@@ -286,10 +339,6 @@ def InitResultList():
     label.config(image=label.img)
     print(type(label.img))
 
-
-
-
-
 def onselect(evt):
     w= evt.widget
     index = int(w.curselection()[0])
@@ -370,7 +419,7 @@ def InitOtherButton():
 
 
     # 구현안됌!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    MapButton = Button(window,text='지도보기',font=boldFont,command=EMailButton)
+    MapButton = Button(window,text='지도보기',font=boldFont,command=MapButton)
     logo = PhotoImage(file='map.gif')
     MapButton.img = logo.subsample(12, 12)
     MapButton.config(image=MapButton.img, compound=LEFT)
@@ -431,6 +480,32 @@ def EMailButton():
     EmailSend = Button(popip, text='메일전송', command=sendEmail)
     EmailSend.place(x=230, y=120)
 
+def MapButton():
+    global position
+    global file
+
+    for i in range(20):
+        if position[i] == '에':
+            position = position[0:i]
+            break
+
+    posx, posy = -1, -1
+
+    for pos in POSITIONCode:
+        if pos[0] == position:
+            posx, posy = pos[1], pos[2]
+            break
+
+    if posx != -1 and posy != -1:
+        map = folium.Map(location=[posx, posy], zoom_start=13)
+        folium.Marker([posx, posy], popup=position).add_to(map)
+        file = 'C:\\Users\\태균\\Desktop\\2019-1\\Script_Language\\SLTermp\\map.html'
+
+        map.save(file)
+        print(type(map))
+
+        webbrowser.open_new(file)
+
 
 def SearchButton():
     global pageNum
@@ -484,3 +559,4 @@ def main():
 
 
 main()
+os.remove(file)
