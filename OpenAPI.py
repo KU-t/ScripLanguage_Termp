@@ -1,4 +1,4 @@
-from urllib.request import  urlopen, Request
+from urllib.request import  urlopen
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
@@ -10,31 +10,31 @@ import urllib.request
 from PIL import Image, ImageTk
 from io import BytesIO
 
+# fileloading
+import json
+
+# Map
 import folium
 import webbrowser
 import os
-
-
-
 import xml.etree.ElementTree as etree
-from xml.dom.minidom import parse,parseString
 
+# Email
+import smtplib
+from email.mime.text import MIMEText
 
 urlArea = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonAcctoKindAreaPeriodInfo'
 urlDetail = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonDetailInfo'
 key = unquote("xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2FEgAKR09JsMDhLWpLdyHpYibXU0bQ%3D%3D")
 
-
-
 BrandCode = {'삼성': "PRJ100", '엘지': "PRJ200", '스카이': "PRJ300", '아이폰': "PRJ400", '기타': "PRJ500"}
+
 ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005", '초록': "CL1006",
              '파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
-AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
-            '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000",
-            '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
+
+AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000", '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000",
+            '전라북도': "LCM000", '전라남도': "LCL000", '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
             '충청남도': "LCN000", '충청북도': "LCO000"}
-
-
 
 POSITIONCode = [
     ['﻿가평경찰서', 37.8253995, 127.514911],
@@ -77,11 +77,10 @@ POSITIONCode = [
     ['이천경찰서', 37.2734108, 127.4349884],
     ['파주경찰서', 37.7534211, 126.7785467],
     ['평택경찰서', 36.9946071, 127.0909191],
-    ['포천경찰서', 37.8936394, 127.2047452],
+    ['포천경찰서', 37.8936394, 127.2047452 ],
     ['하남경찰서', 37.5227417, 127.2246128],
     ['화성서부경찰서', 37.1762931, 126.8125367]
 ]
-
 
 
 window = Tk()
@@ -91,6 +90,7 @@ normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
 imageurl = "이미지가 없습니다."
+file = 'map.html'
 
 
 def InitSearchAreaBox():
@@ -203,40 +203,36 @@ def InitModelName(): #검색버튼
 
 def OpenDetailURL(qeueryp):
     global position
+    global imageurl
 
     DetailEntry.delete('1.0', END)
-    query = '?' + urlencode({quote_plus('ServiceKey'): key,
-                             quote_plus('ATC_ID'): qeueryp['id'],
-                             quote_plus('FD_SN'): qeueryp['num']
-                             })
+    query = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): qeueryp['id'], quote_plus('FD_SN'): qeueryp['num']})
 
     tree = etree.parse(urlopen(urlDetail + query))
     root = tree.getroot()
     body = root[1]
     item = body[0]
-    global imageurl
     imageurl = item.findtext('fdFilePathImg')
     if imageurl == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         imageurl = "이미지가 없습니다."
-    csteSteNm = "보관상태      :" + item.findtext('csteSteNm') + "\n"
-    depPlace = "보관장소      : " +  item.findtext('depPlace') + "\n"
-    fdPlace = "습득장소      : " +  item.findtext('fdPlace') + "\n"
-    model = "모델          : " +  item.findtext('mdcd') + "\n"
-    fdYmd = "습득일자      : " +  item.findtext('fdYmd') + "\n"
-    tel = "전화번호      : " +  item.findtext('tel') + "\n"
+    state = "보관상태\t:" + item.findtext('csteSteNm') + "\n"
+    place = "보관장소\t: " +  item.findtext('depPlace') + "\n"
+    getplace = "습득장소\t: " +  item.findtext('fdPlace') + "\n"
+    model = "모델\t: " +  item.findtext('mdcd') + "\n"
+    getday = "습득일자\t: " +  item.findtext('fdYmd') + "\n"
+    tel = "전화번호\t: " +  item.findtext('tel') + "\n"
     uniq = item.findtext('uniq')
     position = uniq[7:]
 
-    totaltext = csteSteNm + depPlace + fdPlace + model + fdYmd + tel + \
+    totaltext = state + place + getplace + model + getday + tel + \
                 "\n"+uniq
-    DetailEntry.insert(END,totaltext)
+    DetailEntry.insert(END, totaltext)
 
     if imageurl == "이미지가 없습니다.":
         imagelabel = Label(window, height=220, width=420)
         phoneimage = PhotoImage(file='image.gif')
         imagelabel.img = phoneimage.subsample(1, 2)
         imagelabel.config(image=imagelabel.img, compound=LEFT)
-        print(type(imagelabel.img))
 
     else:
         with urllib.request.urlopen(imageurl) as u:
@@ -244,29 +240,20 @@ def OpenDetailURL(qeueryp):
         im = Image.open(BytesIO(raw_data))
         phoneimage = ImageTk.PhotoImage(im)
 
-        width = phoneimage.width()
-        height = phoneimage.height()
-
         imagelabel = Label(window, image=phoneimage, height=220, width=420)
         imagelabel.place(x=500, y=170)
         print(type(imagelabel.img))
 
-
-    print(imageurl)
     imagelabel.place(x=500, y=170)
 
 
 def OpenURL(queryp):
 
     global ResultForDetail
-    query = '?' + urlencode({quote_plus('ServiceKey'): queryp['keynum'],
-                             quote_plus('COL_CD'): queryp['Color'],
-                             quote_plus('FD_LCT_CD'): queryp['Location'],
-                             quote_plus('START_YMD'): queryp['start'],
-                             quote_plus('END_YMD'): queryp['end'],
-                             quote_plus('PRDT_CL_CD_02'):queryp['Brand'],
-                             quote_plus('pageNo'): queryp['page'],
-                             quote_plus('numOfRows'): queryp['numOfRows'],
+    query = '?' + urlencode({quote_plus('ServiceKey'): queryp['keynum'], quote_plus('COL_CD'): queryp['Color'],
+                             quote_plus('FD_LCT_CD'): queryp['Location'], quote_plus('START_YMD'): queryp['start'],
+                             quote_plus('END_YMD'): queryp['end'], quote_plus('PRDT_CL_CD_02'):queryp['Brand'],
+                             quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'],
                              })
 
     tree = etree.parse(urlopen(urlArea + query))
@@ -328,7 +315,7 @@ def InitResultList():
 
     label.img = ImagePhone.subsample(1, 2)
     label.config(image=label.img)
-    print(type(label.img))
+
 
 def onselect(evt):
     w= evt.widget
@@ -372,25 +359,6 @@ def ShowImage():
     imagelabel.place(x=0, y=0)
     popimage.mainloop()
 
-def InitImage():
-
-    global imageurl
-
-    if imageurl == "이미지가 없습니다.":
-        phoneimage = PhotoImage(file='image.gif')
-
-    else:
-       with urllib.request.urlopen(imageurl) as u:
-           raw_data = u.read()
-           openimage = Image.open(BytesIO(raw_data))
-           phoneimage = ImageTk.PhotoImage(openimage)
-
-    print(imageurl)
-    imagelabel = Button(window, height=200, width=420)
-    imagelabel.img = phoneimage.subsample(1, 2)
-    imagelabel.config(image=imagelabel.img, compound=LEFT)
-    imagelabel.place(x=500, y=170)
-
 
 def InitOtherButton():
     global EmailButton
@@ -409,7 +377,6 @@ def InitOtherButton():
     EmailButton.place(x=820, y=580)
 
 
-    # 구현안됌!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     MapButton = Button(window,text='지도보기',font=boldFont,command=MapButton)
     logo = PhotoImage(file='map.gif')
     MapButton.img = logo.subsample(12, 12)
@@ -417,12 +384,6 @@ def InitOtherButton():
     MapButton.place(x=650, y=580)
 
 def sendEmail():
-
-    import mimetypes
-    import smtplib
-    from email.mime.base import MIMEBase
-    from email.mime.text import MIMEText
-
     smtpHost ="smtp.gmail.com"
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
@@ -475,7 +436,7 @@ def MapButton():
     global position
     global file
 
-    for i in range(20):
+    for i in range(50):
         if position[i] == '에':
             position = position[0:i]
             break
@@ -490,10 +451,8 @@ def MapButton():
     if posx != -1 and posy != -1:
         map = folium.Map(location=[posx, posy], zoom_start=13)
         folium.Marker([posx, posy], popup=position).add_to(map)
-        file = 'D:\\4Grade1Semester\\ScriptLanguage\\map.html'
 
         map.save(file)
-        print(type(map))
 
         webbrowser.open_new(file)
 
@@ -522,11 +481,10 @@ def SearchButton():
     color = ColorEntry.get()
     pageNum= 1
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
-              'start': startyear, 'end': endyear, 'Brand': BrandCode[brand],
-              'page': pageNum, 'numOfRows': 20}
+              'start': startyear, 'end': endyear, 'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 40}
 
     totalnum = int(OpenURL(queryp))
-    totalpage = int(totalnum / 20)
+    totalpage = int(totalnum / 40) + 1
     paget = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = paget)
 
