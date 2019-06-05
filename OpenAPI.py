@@ -1,12 +1,13 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> sunmee
 from urllib.request import  urlopen
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
 from tkinter import ttk
-
-import urllib
-import urllib.request
-
 from PIL import Image, ImageTk
 from io import BytesIO
 
@@ -18,6 +19,11 @@ import folium
 import webbrowser
 import os
 import xml.etree.ElementTree as etree
+<<<<<<< HEAD
+=======
+import urllib
+import urllib.request
+>>>>>>> sunmee
 
 # Email
 import smtplib
@@ -27,15 +33,26 @@ urlArea = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMob
 urlDetail = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonDetailInfo'
 key = unquote("xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2FEgAKR09JsMDhLWpLdyHpYibXU0bQ%3D%3D")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> sunmee
 BrandCode = {'삼성': "PRJ100", '엘지': "PRJ200", '스카이': "PRJ300", '아이폰': "PRJ400", '기타': "PRJ500"}
 
 ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005", '초록': "CL1006",
              '파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
+<<<<<<< HEAD
 
 AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000", '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000",
             '전라북도': "LCM000", '전라남도': "LCL000", '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
             '충청남도': "LCN000", '충청북도': "LCO000"}
 
+=======
+AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
+            '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000",
+            '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
+            '충청남도': "LCN000", '충청북도': "LCO000"}
+>>>>>>> sunmee
 POSITIONCode = [
     ['﻿가평경찰서', 37.8253995, 127.514911],
     ['경기남부지방경찰청', 37.2941531, 127.0334451],
@@ -89,13 +106,20 @@ window.title("☏ 폰파인더 ☏")
 normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
+<<<<<<< HEAD
 imageurl = "이미지가 없습니다."
 file = 'map.html'
+=======
+>>>>>>> sunmee
+
+NoImageText = "이미지가 없습니다."
 
 
-def InitSearchAreaBox():
-
+def ComboboxSearch_ABCInit():
     global AreaEntry
+    global BrandEntry
+    global ColorEntry
+
     AreaText = Label(window, text="지역  ", font=normalFont)
     AreaText.place(x=20, y=80)
 
@@ -109,12 +133,9 @@ def InitSearchAreaBox():
     AreaEntry.place(x=60, y=85)
     AreaEntry.set("지역선택")
 
-def InitSearchBrandBox():
-    global BrandEntry
 
     BrandText = Label(window, text="브랜드  ", font=normalFont)
     BrandText.place(x=150, y=80)
-
     BrandEntry = ttk.Combobox(window, width=12, height=15, textvariable=str)
     BrandEntry['values'] = ('삼성', '엘지', '스카이', '아이폰', '기타')
     BrandEntry.grid(column=0, row=0)
@@ -123,12 +144,8 @@ def InitSearchBrandBox():
     BrandEntry.set("브랜드선택")
 
 
-def InitSearchColorBox():
-    global ColorEntry
-
     ColorText = Label(window, text="색상  ", font=normalFont)
     ColorText.place(x=330, y=80)
-
     ColorEntry = ttk.Combobox(window, width=12, height=15, textvariable=str)
     ColorEntry['values'] = ('화이트', '검정', '빨강', '주황', '노랑', '초록', '파랑', '브라운', '보라', '기타')
     ColorEntry.grid(column=0, row=0)
@@ -136,23 +153,8 @@ def InitSearchColorBox():
     ColorEntry.place(x=370, y=84)
     ColorEntry.set("색상선택")
 
-def pageUP():
-    if queryp['page'] < totalpage:
-        queryp['page']  = queryp['page'] +1
-        OpenURL(queryp)
-        paget = str(queryp['page']) + "/" + str(totalpage)
-        PageText.configure(text=paget)
 
-
-def pageDOWN():
-    if queryp['page'] > 1:
-        queryp['page']  = queryp['page'] -1
-        OpenURL(queryp)
-        paget = str(queryp['page']) + "/" + str(totalpage)
-        PageText.configure(text=paget)
-
-
-def InitSearchYMD():
+def SpindoxSearch_YMDInit():
     global SearchStartYearEntry, SearchStartMonthEntry, SearchStartDayEntry
     global SearchEndYearEntry, SearchEndMonthEntry, SearchEndDayEntry
 
@@ -191,15 +193,160 @@ def InitSearchYMD():
     SearchEndDayEntry.pack()
     SearchEndDayEntry.place(x=SearchEndEntryPos[0] + 100, y=SearchEndEntryPos[1] + 20)
 
-def InitModelName(): #검색버튼
-    global ModelEntry
-    global SearchButton
 
-    SearchButton = Button(window,text='검색하기',font=boldFont, width= 120, height = 45, command = SearchButton)
-    logo = PhotoImage(file='search.gif')
-    SearchButton.img = logo.subsample(5, 5)
-    SearchButton.config(image=SearchButton.img, compound=LEFT)
-    SearchButton.place(x=500, y=50)  # place사용시 pack제외
+def WindowScreen():
+    global ResultList
+    global querye
+    global DetailEntry
+
+
+    DFont = font.Font(window, size=10, family='Consolas')
+    DetailEntry = Text(window, font = DFont, width = 60, height = 9)
+    DetailEntry.place(x= 500 , y= 400)
+
+    ResultBoxScrollbar = Scrollbar(window)
+    ResultBoxScrollbar.place(x = 420, y = 170,width = 20, height = 400)
+
+
+    ListBoxHorizon = Scrollbar(window, orient = "horizontal")
+    ListBoxHorizon.place(x = 20, y  =550, width = 390, height = 20)
+
+
+    ResultList = Listbox(window, font = normalFont, width = 44, height = 17,
+                         yscrollcommand=ResultBoxScrollbar.set,
+                         xscrollcommand= ListBoxHorizon.set )
+
+    ResultList.place(x= 20, y = 170)
+    ResultList.bind('<<ListboxSelect>>',onselect)
+
+    ResultBoxScrollbar.config(command=ResultList.yview)
+    ListBoxHorizon.config(command= ResultList.xview)
+
+    ResultListText = Label(window, text="[검색 결과를 확인하세요]", font=normalFont)
+    ResultListText.place(y=135,x=20)
+
+    ImageText = Label(window, text="[핸드폰 이미지]", font=normalFont)
+    ImageText.place(x=500, y =135)
+
+    ImageText = Label(window, text="[디데일 정보]", font=normalFont)
+    ImageText.place(x=500, y=372)
+
+
+    ResultImage = Listbox(window, font=normalFont, width=47, height=9,
+                         yscrollcommand=ResultBoxScrollbar.set,
+                         xscrollcommand=ListBoxHorizon.set)
+
+    ResultImage.place(x=500, y=170)
+
+    ImagePhone = PhotoImage (file="phone1.png")
+    label = Label(window, image =ImagePhone, height= 140, width=110)
+    label.place(x=800,y=10)
+
+    label.img = ImagePhone.subsample(1, 2)
+    label.config(image=label.img)
+    print(type(label.img))
+
+
+class WindowButtons:
+
+    def __init__(self):
+        self.SearchButtonFunction()
+        self.MapButtonFunction()
+        self.ListPageButton()
+        self.ImageButtonFunction()
+        self.EmailButtonFunction()
+
+    def SearchButtonFunction(self):
+        global ModelEntry
+        global SearchButton
+
+        SearchButton = Button(window,text='검색하기',font=boldFont, width= 120, height = 45, command = SearchCommandFunction)
+        logo = PhotoImage(file='search.gif')
+        SearchButton.img = logo.subsample(5, 5)
+        SearchButton.config(image=SearchButton.img, compound=LEFT)
+        SearchButton.place(x=500, y=50)
+
+    def ImageButtonFunction(self):
+
+        ShowImageButton = Button(window,text='사진보기',font=boldFont,command=ShowImageCommandFunction)
+        logo = PhotoImage(file='image.gif')
+        ShowImageButton.img = logo.subsample(12, 12)
+        ShowImageButton.config(image=ShowImageButton.img, compound=LEFT)
+        ShowImageButton.place(x=480, y=580)
+
+    def EmailButtonFunction(self):
+        global EmailButton
+        EmailButton = Button(window,text='메일전송',font=boldFont, command = self.EMailButtonMiniWindow)
+        logo = PhotoImage(file='mail.gif')
+        EmailButton.img = logo.subsample(12, 12)
+        EmailButton.config(image=EmailButton.img, compound=LEFT)
+        EmailButton.place(x=820, y=580)
+
+    def MapButtonFunction(self):
+        global MapButton
+        MapButton = Button(window,text='지도보기',font=boldFont,command=ShowMapCommandFunction)
+        logo = PhotoImage(file='map.gif')
+        MapButton.img = logo.subsample(12, 12)
+        MapButton.config(image=MapButton.img, compound=LEFT)
+        MapButton.place(x=650, y=580)
+
+    def ListPageButton(self):
+        global leftButton
+        global rightButton
+        global PageText
+
+        leftButton = Button(window, text = "◁", command = self.PageDOWN, width= 1, height = 1, font = normalFont)
+        leftButton.place(x=100, y=600)
+        rightButton = Button(window, text = "▷",command = self.PageUP, width= 1, height = 1, font = normalFont)
+        rightButton.place(x=240, y=600)
+        PageText =Label(window, font = normalFont , text = "0/0")
+        PageText.place(x=165, y=600)
+
+#ListPageButton command
+    def PageUP(self):
+        if queryp['page'] < totalpage:
+           queryp['page']  = queryp['page'] +1
+           OpenURL(queryp)
+           paget = str(queryp['page']) + "/" + str(totalpage)
+           PageText.configure(text=paget)
+
+    def PageDOWN(self):
+        if queryp['page'] > 1:
+           queryp['page']  = queryp['page'] -1
+           OpenURL(queryp)
+           paget = str(queryp['page']) + "/" + str(totalpage)
+           PageText.configure(text=paget)
+
+
+    def EMailButtonMiniWindow(self):
+        global popip
+        global emailaddress
+        global emailsendbutton
+
+
+        popip = Toplevel(window)
+        popip.geometry("320x160")
+        popip.title("메일 입력창")
+        popip.configure(background='pink')
+
+        label = Label(popip, text="메일을 입력해주세요♡", font=normalFont)
+        label.place(x=75, y=30)
+
+        emailaddress= Entry(popip, width=14)
+        emailaddress.place(x=50, y=85)
+
+        emailsendbutton = ttk.Combobox(popip, width=12, height=15, textvariable=str)
+        emailsendbutton['values'] = ('naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hanmail.net', 'kpu.ac,kr')
+        emailsendbutton.grid(column=0, row=0)
+        emailsendbutton.current(0)
+        emailsendbutton.place(x=160, y=85)
+        emailsendbutton.set("메일선택")
+
+        EmailSend = Button(popip, text='메일전송', command=SendEmailCommandFunction)
+        EmailSend.place(x=230, y=120)
+
+
+
 
 def OpenDetailURL(qeueryp):
     global position
@@ -212,6 +359,7 @@ def OpenDetailURL(qeueryp):
     root = tree.getroot()
     body = root[1]
     item = body[0]
+<<<<<<< HEAD
     imageurl = item.findtext('fdFilePathImg')
     if imageurl == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         imageurl = "이미지가 없습니다."
@@ -221,6 +369,18 @@ def OpenDetailURL(qeueryp):
     model = "모델\t: " +  item.findtext('mdcd') + "\n"
     getday = "습득일자\t: " +  item.findtext('fdYmd') + "\n"
     tel = "전화번호\t: " +  item.findtext('tel') + "\n"
+=======
+    global NoImageText
+    NoImageText = item.findtext('fdFilePathImg')
+    if NoImageText == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
+        NoImageText = "이미지가 없습니다."
+    csteSteNm = "보관상태      :" + item.findtext('csteSteNm') + "\n"
+    depPlace = "보관장소      : " +  item.findtext('depPlace') + "\n"
+    fdPlace = "습득장소      : " +  item.findtext('fdPlace') + "\n"
+    model = "모델          : " +  item.findtext('mdcd') + "\n"
+    fdYmd = "습득일자      : " +  item.findtext('fdYmd') + "\n"
+    tel = "전화번호      : " +  item.findtext('tel') + "\n"
+>>>>>>> sunmee
     uniq = item.findtext('uniq')
     position = uniq[7:]
 
@@ -228,14 +388,14 @@ def OpenDetailURL(qeueryp):
                 "\n"+uniq
     DetailEntry.insert(END, totaltext)
 
-    if imageurl == "이미지가 없습니다.":
+    if NoImageText == "이미지가 없습니다.":
         imagelabel = Label(window, height=220, width=420)
         phoneimage = PhotoImage(file='image.gif')
         imagelabel.img = phoneimage.subsample(1, 2)
         imagelabel.config(image=imagelabel.img, compound=LEFT)
 
     else:
-        with urllib.request.urlopen(imageurl) as u:
+        with urllib.request.urlopen(NoImageText) as u:
             raw_data = u.read()
         im = Image.open(BytesIO(raw_data))
         phoneimage = ImageTk.PhotoImage(im)
@@ -244,6 +404,11 @@ def OpenDetailURL(qeueryp):
         imagelabel.place(x=500, y=170)
         print(type(imagelabel.img))
 
+<<<<<<< HEAD
+=======
+
+    print(NoImageText)
+>>>>>>> sunmee
     imagelabel.place(x=500, y=170)
 
 
@@ -272,6 +437,7 @@ def OpenURL(queryp):
     return body.findtext('totalCount')
 
 
+<<<<<<< HEAD
 def InitResultList():
     global ResultList
     global querye
@@ -317,35 +483,18 @@ def InitResultList():
     label.config(image=label.img)
 
 
+=======
+>>>>>>> sunmee
 def onselect(evt):
     w= evt.widget
     index = int(w.curselection()[0])
     OpenDetailURL( ResultForDetail[index])
 
-def InitDetailWindow():
-    global DetailEntry
-    DFont = font.Font(window, size=10, family='Consolas')
-    DetailEntry = Text(window, font = DFont, width = 60, height = 9)
-    DetailEntry.place(x= 500 , y= 400)
+#commandfunctions
 
-
-def initPageButton():
-    global leftButton
-    global rightButton
-    global PageText
-
-    leftButton = Button(window, text = "◁", command = pageDOWN, width= 1, height = 1, font = normalFont)
-    leftButton.place(x=100, y=600)
-    rightButton = Button(window, text = "▷",command = pageUP, width= 1, height = 1, font = normalFont)
-    rightButton.place(x=240, y=600)
-
-    PageText =Label(window, font = normalFont , text = "0/0")
-    PageText.place(x=165, y=600)
-
-
-def ShowImage():
-    with urllib.request.urlopen(imageurl) as u:
-        raw_data = u.read()
+def ShowImageCommandFunction():
+    with urllib.request.urlopen(NoImageText) as u:
+         raw_data = u.read()
     im = Image.open(BytesIO(raw_data))
     image = ImageTk.PhotoImage(im)
 
@@ -353,12 +502,12 @@ def ShowImage():
     height = image.height()
     popimage = Toplevel(window)
     popimage.geometry(str(width)+"x"+str(height)+"+150+50")
-
     imagelabel = Label(popimage, image=image, height=height, width=width)
     imagelabel.pack()
     imagelabel.place(x=0, y=0)
     popimage.mainloop()
 
+<<<<<<< HEAD
 
 def InitOtherButton():
     global EmailButton
@@ -384,14 +533,18 @@ def InitOtherButton():
     MapButton.place(x=650, y=580)
 
 def sendEmail():
+=======
+
+def SendEmailCommandFunction():
+    import smtplib
+    from email.mime.text import MIMEText
+>>>>>>> sunmee
     smtpHost ="smtp.gmail.com"
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
     msg = MIMEText(text)
-
     sender = "tjdtjsal96@naver.com"
     recipient = emailaddress.get() + "@" + emailsendbutton.get()
-
     msg['Subject'] = "당신의 분실된 핸드폰 정보입니다."
     msg['From'] = sender
     msg['To'] = recipient
@@ -399,81 +552,63 @@ def sendEmail():
     s.ehlo()
     s.starttls()
     s.ehlo()
-    s.login("codnjs03116@gmail.com", "TTettangLove")
+    s.login("tjdtjsal960723@gmail.com", "Sun_mee9113")
     s.sendmail(sender, [recipient], msg.as_string())
     s.close()
     popip.destroy()
 
 
-def EMailButton():
-    global popip
-    global emailaddress
-    global emailsendbutton
-
-    popip = Toplevel(window)
-    popip.geometry("320x160")
-    popip.title("메일 입력창")
-    popip.configure(background='pink')
-
-    label = Label(popip, text="메일을 입력해주세요♡", font=normalFont)
-    label.place(x=75, y=30)
-
-    emailaddress= Entry(popip, width=14)
-    emailaddress.place(x=50, y=85)
-
-    emailsendbutton = ttk.Combobox(popip, width=12, height=15, textvariable=str)
-    emailsendbutton['values'] = ('naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hanmail.net', 'kpu.ac,kr')
-    emailsendbutton.grid(column=0, row=0)
-    emailsendbutton.current(0)
-    emailsendbutton.place(x=160, y=85)
-    emailsendbutton.set("메일선택")
-
-    EmailSend = Button(popip, text='메일전송', command=sendEmail)
-    EmailSend.place(x=230, y=120)
-
-
-def MapButton():
+def ShowMapCommandFunction():
     global position
     global file
+<<<<<<< HEAD
 
     for i in range(50):
         if position[i] == '에':
             position = position[0:i]
             break
 
+=======
+    for i in range(20):
+       if position[i] == '에':
+          position = position[0:i]
+          break
+>>>>>>> sunmee
     posx, posy = -1, -1
-
     for pos in POSITIONCode:
-        if pos[0] == position:
-            posx, posy = pos[1], pos[2]
-            break
-
+       if pos[0] == position:
+          posx, posy = pos[1], pos[2]
+          break
     if posx != -1 and posy != -1:
+<<<<<<< HEAD
         map = folium.Map(location=[posx, posy], zoom_start=13)
         folium.Marker([posx, posy], popup=position).add_to(map)
 
         map.save(file)
+=======
+       map = folium.Map(location=[posx, posy], zoom_start=13)
+       folium.Marker([posx, posy], popup=position).add_to(map)
+       file = 'map.html'
+       map.save(file)
+       print(type(map))
+       webbrowser.open_new(file)
+>>>>>>> sunmee
 
-        webbrowser.open_new(file)
 
-
-def SearchButton():
+def SearchCommandFunction():
     global pageNum
     global totalpage
     global queryp
-
     SY = SearchStartYearEntry.get()
     SM = SearchStartMonthEntry.get()
     if(int(SM) < 10): SM = "0" + SM
     SD = SearchStartDayEntry.get()
     if (int(SD) < 10): SD = "0" + SD
-
     EY = SearchEndYearEntry.get()
     EM = SearchEndMonthEntry.get()
     if (int(EM) < 10): EM = "0" + EM
     ED = SearchEndDayEntry.get()
     if (int(ED) < 10): ED = "0" + ED
-
     startyear = SY + SM + SD
     endyear = EY + EM + ED
     brand = BrandEntry.get()
@@ -481,27 +616,30 @@ def SearchButton():
     color = ColorEntry.get()
     pageNum= 1
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
+<<<<<<< HEAD
               'start': startyear, 'end': endyear, 'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 40}
 
+=======
+        'start': startyear, 'end': endyear, 'Brand': BrandCode[brand],
+        'page': pageNum, 'numOfRows': 20}
+>>>>>>> sunmee
     totalnum = int(OpenURL(queryp))
     totalpage = int(totalnum / 40) + 1
     paget = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = paget)
 
-def InitButtons():
-    InitOtherButton()  # 이메일 맵 버튼
-    InitSearchAreaBox()  # 지역 버튼
-    InitSearchBrandBox()  # 브랜드 버튼
-    InitSearchYMD()  # 기간 버튼
-    InitSearchColorBox()  # 색 버튼
-    InitModelName()  # 검색 버튼
-    initPageButton()  # 페이지 버튼
+#######################################################
+def ShowWindow():
+    windowbuttons = WindowButtons()
+    windowbuttons.__init__()
+    WindowScreen()
+    ComboboxSearch_ABCInit()  # 지역 버튼
+    SpindoxSearch_YMDInit()  # 기간 버튼
 
 
 def main():
-    InitButtons()
-    InitResultList()        #결과창
-    InitDetailWindow()      #상세정보 window
+    ShowWindow()
+    WindowScreen()        #결과창
     window.mainloop()
 
 main()
