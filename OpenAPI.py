@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-
-from urllib.request import  urlopen
-
-=======
 from urllib.request import urlopen
->>>>>>> 190611_exe
+
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
@@ -313,18 +308,7 @@ class WindowButtons:
         EmailSend.place(x=230, y=120)
 
 
-<<<<<<< HEAD
 
-
-def OpenDetailURL(qeueryp):
-    global position
-    global imageurl
-
-    DetailEntry.delete('1.0', END)
-    query = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): qeueryp['id'], quote_plus('FD_SN'): qeueryp['num']})
-
-    tree = etree.parse(urlopen(urlDetail + query))
-=======
 def OpenDetailURL(phonedata):
     global policepos
     global NoImageText
@@ -332,15 +316,11 @@ def OpenDetailURL(phonedata):
     DetailEntry.delete('1.0', END)
     URLs = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): phonedata['id'], quote_plus('FD_SN'): phonedata['num']})
     tree = etree.parse(urlopen(urlDetail + URLs))
->>>>>>> 190611_exe
+
     root = tree.getroot()
     body = root[1]
     item = body[0]
 
-<<<<<<< HEAD
-    global NoImageText
-=======
->>>>>>> 190611_exe
     NoImageText = item.findtext('fdFilePathImg')
     if NoImageText == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         NoImageText = "이미지가 없습니다."
@@ -493,21 +473,11 @@ def InitOtherButton():
 
 
 def SendEmailCommandFunction():
-
-<<<<<<< HEAD
-    import smtplib
-    from email.mime.text import MIMEText
-
-    smtpHost ="smtp.gmail.com"
-    port = "587"
-    text = DetailEntry.get("1.0",'end-1c')
-    msg = MIMEText(text)
-=======
     smtp ="smtp.gmail.com"
     portnum = "587"
     text = DetailEntry.get("1.0", 'end-1c')
     message = MIMEText(text)
->>>>>>> 190611_exe
+
     sender = "tjdtjsal96@naver.com"
     recipient = emailaddress.get() + "@" + emailsendbutton.get()
     message['Subject'] = "당신의 분실된 핸드폰 정보입니다."
@@ -574,23 +544,14 @@ def SearchCommandFunction():
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
-<<<<<<< HEAD
 
-    queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
-=======
     Datas = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
->>>>>>> 190611_exe
               'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 20}
     totalnum = int(OpenURL(Datas))
     totalpage = int(totalnum / 20) + 1
-<<<<<<< HEAD
 
-    paget = str(pageNum) +"/"+ str(totalpage)
-    PageText.configure(text = paget)
-=======
     currpage = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = currpage)
->>>>>>> 190611_exe
 
 #######################################################
 def ShowWindow():
