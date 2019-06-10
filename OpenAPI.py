@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
-
->>>>>>> sunmee
 from urllib.request import  urlopen
-=======
-from urllib.request import urlopen
->>>>>>> 190611_exe
+
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
@@ -15,23 +8,14 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from io import BytesIO
 
-<<<<<<< HEAD
-# fileloading
-import json
-
-# Map
-=======
 #Map
->>>>>>> 190611_exe
 import folium
 import webbrowser
 import os
 import xml.etree.ElementTree as etree
-<<<<<<< HEAD
-=======
+
 import urllib
 import urllib.request
->>>>>>> sunmee
 
 # Email
 import smtplib
@@ -41,28 +25,8 @@ urlArea = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMob
 urlDetail = 'http://apis.data.go.kr/1320000/SearchMoblphonInfoInqireService/getMoblphonDetailInfo'
 key = unquote("xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2FEgAKR09JsMDhLWpLdyHpYibXU0bQ%3D%3D")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> sunmee
 BrandCode = {'삼성': "PRJ100", '엘지': "PRJ200", '스카이': "PRJ300", '아이폰': "PRJ400", '기타': "PRJ500"}
 
-<<<<<<< HEAD
-ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005", '초록': "CL1006",
-             '파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
-<<<<<<< HEAD
-
-AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000", '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000",
-            '전라북도': "LCM000", '전라남도': "LCL000", '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
-            '충청남도': "LCN000", '충청북도': "LCO000"}
-
-=======
-AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
-            '경기도': "LCI000", '경상북도': "LCK000", '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000",
-            '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
-            '충청남도': "LCN000", '충청북도': "LCO000"}
->>>>>>> sunmee
-=======
 ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005",
              '초록': "CL1006",'파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
 
@@ -70,7 +34,6 @@ AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000", '경기�
             '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000", '강원도': "LCH000", '울산': "LCU000",
             '부산': "LCT000", '광주': "LCQ000", '충청남도': "LCN000", '충청북도': "LCO000"}
 
->>>>>>> 190611_exe
 POSITIONCode = [
     ['﻿가평경찰서', 37.8253995, 127.514911],
     ['경기남부지방경찰청', 37.2941531, 127.0334451],
@@ -123,15 +86,7 @@ window.title("☏ 폰파인더 ☏")
 normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 imageurl = "이미지가 없습니다."
-file = 'map.html'
-=======
->>>>>>> sunmee
-
-=======
->>>>>>> 190611_exe
 NoImageText = "이미지가 없습니다."
 file = 'map.html'
 
@@ -368,43 +323,17 @@ def OpenDetailURL(qeueryp):
 
     DetailEntry.delete('1.0', END)
     query = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): qeueryp['id'], quote_plus('FD_SN'): qeueryp['num']})
-<<<<<<< HEAD
 
-=======
->>>>>>> 190611_exe
     tree = etree.parse(urlopen(urlDetail + query))
     root = tree.getroot()
     body = root[1]
     item = body[0]
-<<<<<<< HEAD
-    imageurl = item.findtext('fdFilePathImg')
-    if imageurl == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
-        imageurl = "이미지가 없습니다."
-    state = "보관상태\t:" + item.findtext('csteSteNm') + "\n"
-    place = "보관장소\t: " +  item.findtext('depPlace') + "\n"
-    getplace = "습득장소\t: " +  item.findtext('fdPlace') + "\n"
-    model = "모델\t: " +  item.findtext('mdcd') + "\n"
-    getday = "습득일자\t: " +  item.findtext('fdYmd') + "\n"
-    tel = "전화번호\t: " +  item.findtext('tel') + "\n"
-=======
+
     global NoImageText
     NoImageText = item.findtext('fdFilePathImg')
     if NoImageText == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         NoImageText = "이미지가 없습니다."
-<<<<<<< HEAD
-    csteSteNm = "보관상태      :" + item.findtext('csteSteNm') + "\n"
-    depPlace = "보관장소      : " +  item.findtext('depPlace') + "\n"
-    fdPlace = "습득장소      : " +  item.findtext('fdPlace') + "\n"
-    model = "모델          : " +  item.findtext('mdcd') + "\n"
-    fdYmd = "습득일자      : " +  item.findtext('fdYmd') + "\n"
-    tel = "전화번호      : " +  item.findtext('tel') + "\n"
->>>>>>> sunmee
-    uniq = item.findtext('uniq')
-    position = uniq[7:]
 
-    totaltext = state + place + getplace + model + getday + tel + \
-                "\n"+uniq
-=======
     state = "보관상태\t:" + item.findtext('csteSteNm') + "\n"
     place = "보관장소\t: " +  item.findtext('depPlace') + "\n"
     getplace = "습득장소\t: " +  item.findtext('fdPlace') + "\n"
@@ -415,7 +344,7 @@ def OpenDetailURL(qeueryp):
     position = uniq[7:]
 
     totaltext = state + place + getplace + model + getday + tel + "\n" + uniq
->>>>>>> 190611_exe
+
     DetailEntry.insert(END, totaltext)
 
     if NoImageText == "이미지가 없습니다.":
@@ -434,14 +363,6 @@ def OpenDetailURL(qeueryp):
         imagelabel.place(x=500, y=170)
         print(type(imagelabel.img))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-    print(NoImageText)
->>>>>>> sunmee
-=======
->>>>>>> 190611_exe
     imagelabel.place(x=500, y=170)
 
 
@@ -451,12 +372,7 @@ def OpenURL(queryp):
     query = '?' + urlencode({quote_plus('ServiceKey'): queryp['keynum'], quote_plus('COL_CD'): queryp['Color'],
                              quote_plus('FD_LCT_CD'): queryp['Location'], quote_plus('START_YMD'): queryp['start'],
                              quote_plus('END_YMD'): queryp['end'], quote_plus('PRDT_CL_CD_02'):queryp['Brand'],
-<<<<<<< HEAD
-                             quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'],
-                             })
-=======
                              quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'], })
->>>>>>> 190611_exe
 
     tree = etree.parse(urlopen(urlArea + query))
     root = tree.getroot()
@@ -474,7 +390,6 @@ def OpenURL(queryp):
     return body.findtext('totalCount')
 
 
-<<<<<<< HEAD
 def InitResultList():
     global ResultList
     global querye
@@ -520,8 +435,6 @@ def InitResultList():
     label.config(image=label.img)
 
 
-=======
->>>>>>> sunmee
 def onselect(evt):
     w= evt.widget
     index = int(w.curselection()[0])
@@ -543,8 +456,6 @@ def ShowImageCommandFunction():
     imagelabel.pack()
     imagelabel.place(x=0, y=0)
     popimage.mainloop()
-
-<<<<<<< HEAD
 
 def InitOtherButton():
     global EmailButton
@@ -569,17 +480,12 @@ def InitOtherButton():
     MapButton.config(image=MapButton.img, compound=LEFT)
     MapButton.place(x=650, y=580)
 
-def sendEmail():
-=======
 
 def SendEmailCommandFunction():
-<<<<<<< HEAD
+
     import smtplib
     from email.mime.text import MIMEText
->>>>>>> sunmee
-=======
 
->>>>>>> 190611_exe
     smtpHost ="smtp.gmail.com"
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
@@ -602,38 +508,25 @@ def SendEmailCommandFunction():
 def ShowMapCommandFunction():
     global position
     global file
-<<<<<<< HEAD
 
-    for i in range(50):
-        if position[i] == '에':
-            position = position[0:i]
-            break
-
-=======
     for i in range(20):
        if position[i] == '에':
           position = position[0:i]
           break
->>>>>>> sunmee
+
     posx, posy = -1, -1
     for pos in POSITIONCode:
        if pos[0] == position:
           posx, posy = pos[1], pos[2]
           break
     if posx != -1 and posy != -1:
-<<<<<<< HEAD
-        map = folium.Map(location=[posx, posy], zoom_start=13)
-        folium.Marker([posx, posy], popup=position).add_to(map)
 
-        map.save(file)
-=======
        map = folium.Map(location=[posx, posy], zoom_start=13)
        folium.Marker([posx, posy], popup=position).add_to(map)
        file = 'map.html'
        map.save(file)
        print(type(map))
        webbrowser.open_new(file)
->>>>>>> sunmee
 
 
 def SearchCommandFunction():
@@ -661,23 +554,12 @@ def SearchCommandFunction():
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
-<<<<<<< HEAD
-    queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
-<<<<<<< HEAD
-              'start': startyear, 'end': endyear, 'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 40}
 
-=======
-        'start': startyear, 'end': endyear, 'Brand': BrandCode[brand],
-        'page': pageNum, 'numOfRows': 20}
->>>>>>> sunmee
-    totalnum = int(OpenURL(queryp))
-    totalpage = int(totalnum / 40) + 1
-=======
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
               'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 20}
     totalnum = int(OpenURL(queryp))
     totalpage = int(totalnum / 20) + 1
->>>>>>> 190611_exe
+
     paget = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = paget)
 
