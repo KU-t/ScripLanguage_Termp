@@ -207,7 +207,7 @@ def WindowScreen():
 
     ResultImage.place(x=500, y=170)
 
-    ImagePhone = PhotoImage (file="phone1.png")
+    ImagePhone = PhotoImage (file="./image./phone1.png")
     label = Label(window, image =ImagePhone, height= 140, width=110)
     label.place(x=800,y=10)
 
@@ -229,14 +229,14 @@ class WindowButtons:
         global SearchButton
 
         SearchButton = Button(window,text='검색하기',font=boldFont, width= 120, height = 45, command = SearchCommandFunction)
-        logo = PhotoImage(file='search.gif')
+        logo = PhotoImage(file='./image./search.gif')
         SearchButton.img = logo.subsample(5, 5)
         SearchButton.config(image=SearchButton.img, compound=LEFT)
         SearchButton.place(x=500, y=50)
 
     def ImageButtonFunction(self):
         ShowImageButton = Button(window,text='사진보기',font=boldFont,command=ShowImageCommandFunction)
-        logo = PhotoImage(file='image.gif')
+        logo = PhotoImage(file='./image./image.gif')
         ShowImageButton.img = logo.subsample(12, 12)
         ShowImageButton.config(image=ShowImageButton.img, compound=LEFT)
         ShowImageButton.place(x=480, y=580)
@@ -244,7 +244,7 @@ class WindowButtons:
     def EmailButtonFunction(self):
         global EmailButton
         EmailButton = Button(window,text='메일전송',font=boldFont, command = self.EMailButtonMiniWindow)
-        logo = PhotoImage(file='mail.gif')
+        logo = PhotoImage(file='./image./mail.gif')
         EmailButton.img = logo.subsample(12, 12)
         EmailButton.config(image=EmailButton.img, compound=LEFT)
         EmailButton.place(x=820, y=580)
@@ -252,7 +252,7 @@ class WindowButtons:
     def MapButtonFunction(self):
         global MapButton
         MapButton = Button(window,text='지도보기',font=boldFont,command=ShowMapCommandFunction)
-        logo = PhotoImage(file='map.gif')
+        logo = PhotoImage(file='./image./map.gif')
         MapButton.img = logo.subsample(12, 12)
         MapButton.config(image=MapButton.img, compound=LEFT)
         MapButton.place(x=650, y=580)
@@ -342,7 +342,7 @@ def OpenDetailURL(qeueryp):
 
     if NoImageText == "이미지가 없습니다.":
         imagelabel = Label(window, height=220, width=420)
-        phoneimage = PhotoImage(file='image.gif')
+        phoneimage = PhotoImage(file='./image./image.gif')
         imagelabel.img = phoneimage.subsample(1, 2)
         imagelabel.config(image=imagelabel.img, compound=LEFT)
 
