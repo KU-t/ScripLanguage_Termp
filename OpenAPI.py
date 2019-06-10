@@ -1,9 +1,13 @@
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 
 >>>>>>> sunmee
 from urllib.request import  urlopen
+=======
+from urllib.request import urlopen
+>>>>>>> 190611_exe
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
@@ -11,10 +15,14 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from io import BytesIO
 
+<<<<<<< HEAD
 # fileloading
 import json
 
 # Map
+=======
+#Map
+>>>>>>> 190611_exe
 import folium
 import webbrowser
 import os
@@ -39,6 +47,7 @@ key = unquote("xZ%2ByjfoWhIOr7s%2BJ0QG0HbPyNRNi46%2F4l8g7G5qTQp6IgeYNACJFFvSQe%2
 >>>>>>> sunmee
 BrandCode = {'삼성': "PRJ100", '엘지': "PRJ200", '스카이': "PRJ300", '아이폰': "PRJ400", '기타': "PRJ500"}
 
+<<<<<<< HEAD
 ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005", '초록': "CL1006",
              '파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
 <<<<<<< HEAD
@@ -53,6 +62,15 @@ AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000",
             '강원도': "LCH000", '울산': "LCU000", '부산': "LCT000", '광주': "LCQ000",
             '충청남도': "LCN000", '충청북도': "LCO000"}
 >>>>>>> sunmee
+=======
+ColorCode = {'화이트': "CL1001", '검정': "CL1002", '빨강': "CL1003", '주황': "CL1004", '노랑': "CL1005",
+             '초록': "CL1006",'파랑': "CL1007", '브라운': "CL1008", '보라': "CL1009", '기타': "CL1010"}
+
+AreaCode = {'서울': "LCA000", '인천': "LCV000", '대구': "LCR000", '경기도': "LCI000", '경상북도': "LCK000",
+            '경상남도': "LCJ000", '전라북도': "LCM000", '전라남도': "LCL000", '강원도': "LCH000", '울산': "LCU000",
+            '부산': "LCT000", '광주': "LCQ000", '충청남도': "LCN000", '충청북도': "LCO000"}
+
+>>>>>>> 190611_exe
 POSITIONCode = [
     ['﻿가평경찰서', 37.8253995, 127.514911],
     ['경기남부지방경찰청', 37.2941531, 127.0334451],
@@ -99,7 +117,6 @@ POSITIONCode = [
     ['화성서부경찰서', 37.1762931, 126.8125367]
 ]
 
-
 window = Tk()
 window.geometry("1000x650")  #window size
 window.title("☏ 폰파인더 ☏")
@@ -107,13 +124,16 @@ normalFont = font.Font(window,size= 12, weight='bold', family='맑은 고딕')
 boldFont = font.Font(window,size= 15, weight='bold', family='맑은 고딕')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 imageurl = "이미지가 없습니다."
 file = 'map.html'
 =======
 >>>>>>> sunmee
 
+=======
+>>>>>>> 190611_exe
 NoImageText = "이미지가 없습니다."
-
+file = 'map.html'
 
 def ComboboxSearch_ABCInit():
     global AreaEntry
@@ -199,7 +219,6 @@ def WindowScreen():
     global querye
     global DetailEntry
 
-
     DFont = font.Font(window, size=10, family='Consolas')
     DetailEntry = Text(window, font = DFont, width = 60, height = 9)
     DetailEntry.place(x= 500 , y= 400)
@@ -207,10 +226,8 @@ def WindowScreen():
     ResultBoxScrollbar = Scrollbar(window)
     ResultBoxScrollbar.place(x = 420, y = 170,width = 20, height = 400)
 
-
     ListBoxHorizon = Scrollbar(window, orient = "horizontal")
     ListBoxHorizon.place(x = 20, y  =550, width = 390, height = 20)
-
 
     ResultList = Listbox(window, font = normalFont, width = 44, height = 17,
                          yscrollcommand=ResultBoxScrollbar.set,
@@ -231,14 +248,13 @@ def WindowScreen():
     ImageText = Label(window, text="[디데일 정보]", font=normalFont)
     ImageText.place(x=500, y=372)
 
-
     ResultImage = Listbox(window, font=normalFont, width=47, height=9,
                          yscrollcommand=ResultBoxScrollbar.set,
                          xscrollcommand=ListBoxHorizon.set)
 
     ResultImage.place(x=500, y=170)
 
-    ImagePhone = PhotoImage (file="phone1.png")
+    ImagePhone = PhotoImage (file="./image./phone1.png")
     label = Label(window, image =ImagePhone, height= 140, width=110)
     label.place(x=800,y=10)
 
@@ -248,7 +264,6 @@ def WindowScreen():
 
 
 class WindowButtons:
-
     def __init__(self):
         self.SearchButtonFunction()
         self.MapButtonFunction()
@@ -261,15 +276,14 @@ class WindowButtons:
         global SearchButton
 
         SearchButton = Button(window,text='검색하기',font=boldFont, width= 120, height = 45, command = SearchCommandFunction)
-        logo = PhotoImage(file='search.gif')
+        logo = PhotoImage(file='./image./search.gif')
         SearchButton.img = logo.subsample(5, 5)
         SearchButton.config(image=SearchButton.img, compound=LEFT)
         SearchButton.place(x=500, y=50)
 
     def ImageButtonFunction(self):
-
         ShowImageButton = Button(window,text='사진보기',font=boldFont,command=ShowImageCommandFunction)
-        logo = PhotoImage(file='image.gif')
+        logo = PhotoImage(file='./image./image.gif')
         ShowImageButton.img = logo.subsample(12, 12)
         ShowImageButton.config(image=ShowImageButton.img, compound=LEFT)
         ShowImageButton.place(x=480, y=580)
@@ -277,7 +291,7 @@ class WindowButtons:
     def EmailButtonFunction(self):
         global EmailButton
         EmailButton = Button(window,text='메일전송',font=boldFont, command = self.EMailButtonMiniWindow)
-        logo = PhotoImage(file='mail.gif')
+        logo = PhotoImage(file='./image./mail.gif')
         EmailButton.img = logo.subsample(12, 12)
         EmailButton.config(image=EmailButton.img, compound=LEFT)
         EmailButton.place(x=820, y=580)
@@ -285,7 +299,7 @@ class WindowButtons:
     def MapButtonFunction(self):
         global MapButton
         MapButton = Button(window,text='지도보기',font=boldFont,command=ShowMapCommandFunction)
-        logo = PhotoImage(file='map.gif')
+        logo = PhotoImage(file='./image./map.gif')
         MapButton.img = logo.subsample(12, 12)
         MapButton.config(image=MapButton.img, compound=LEFT)
         MapButton.place(x=650, y=580)
@@ -354,7 +368,10 @@ def OpenDetailURL(qeueryp):
 
     DetailEntry.delete('1.0', END)
     query = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): qeueryp['id'], quote_plus('FD_SN'): qeueryp['num']})
+<<<<<<< HEAD
 
+=======
+>>>>>>> 190611_exe
     tree = etree.parse(urlopen(urlDetail + query))
     root = tree.getroot()
     body = root[1]
@@ -374,6 +391,7 @@ def OpenDetailURL(qeueryp):
     NoImageText = item.findtext('fdFilePathImg')
     if NoImageText == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         NoImageText = "이미지가 없습니다."
+<<<<<<< HEAD
     csteSteNm = "보관상태      :" + item.findtext('csteSteNm') + "\n"
     depPlace = "보관장소      : " +  item.findtext('depPlace') + "\n"
     fdPlace = "습득장소      : " +  item.findtext('fdPlace') + "\n"
@@ -386,11 +404,23 @@ def OpenDetailURL(qeueryp):
 
     totaltext = state + place + getplace + model + getday + tel + \
                 "\n"+uniq
+=======
+    state = "보관상태\t:" + item.findtext('csteSteNm') + "\n"
+    place = "보관장소\t: " +  item.findtext('depPlace') + "\n"
+    getplace = "습득장소\t: " +  item.findtext('fdPlace') + "\n"
+    model = "모델\t: " +  item.findtext('mdcd') + "\n"
+    getday = "습득일자\t: " +  item.findtext('fdYmd') + "\n"
+    tel = "전화번호\t: " +  item.findtext('tel') + "\n"
+    uniq = item.findtext('uniq')
+    position = uniq[7:]
+
+    totaltext = state + place + getplace + model + getday + tel + "\n" + uniq
+>>>>>>> 190611_exe
     DetailEntry.insert(END, totaltext)
 
     if NoImageText == "이미지가 없습니다.":
         imagelabel = Label(window, height=220, width=420)
-        phoneimage = PhotoImage(file='image.gif')
+        phoneimage = PhotoImage(file='./image./image.gif')
         imagelabel.img = phoneimage.subsample(1, 2)
         imagelabel.config(image=imagelabel.img, compound=LEFT)
 
@@ -405,10 +435,13 @@ def OpenDetailURL(qeueryp):
         print(type(imagelabel.img))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
     print(NoImageText)
 >>>>>>> sunmee
+=======
+>>>>>>> 190611_exe
     imagelabel.place(x=500, y=170)
 
 
@@ -418,8 +451,12 @@ def OpenURL(queryp):
     query = '?' + urlencode({quote_plus('ServiceKey'): queryp['keynum'], quote_plus('COL_CD'): queryp['Color'],
                              quote_plus('FD_LCT_CD'): queryp['Location'], quote_plus('START_YMD'): queryp['start'],
                              quote_plus('END_YMD'): queryp['end'], quote_plus('PRDT_CL_CD_02'):queryp['Brand'],
+<<<<<<< HEAD
                              quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'],
                              })
+=======
+                             quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'], })
+>>>>>>> 190611_exe
 
     tree = etree.parse(urlopen(urlArea + query))
     root = tree.getroot()
@@ -536,9 +573,13 @@ def sendEmail():
 =======
 
 def SendEmailCommandFunction():
+<<<<<<< HEAD
     import smtplib
     from email.mime.text import MIMEText
 >>>>>>> sunmee
+=======
+
+>>>>>>> 190611_exe
     smtpHost ="smtp.gmail.com"
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
@@ -599,15 +640,20 @@ def SearchCommandFunction():
     global pageNum
     global totalpage
     global queryp
+
     SY = SearchStartYearEntry.get()
     SM = SearchStartMonthEntry.get()
+
     if(int(SM) < 10): SM = "0" + SM
     SD = SearchStartDayEntry.get()
+
     if (int(SD) < 10): SD = "0" + SD
     EY = SearchEndYearEntry.get()
     EM = SearchEndMonthEntry.get()
+
     if (int(EM) < 10): EM = "0" + EM
     ED = SearchEndDayEntry.get()
+
     if (int(ED) < 10): ED = "0" + ED
     startyear = SY + SM + SD
     endyear = EY + EM + ED
@@ -615,6 +661,7 @@ def SearchCommandFunction():
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
+<<<<<<< HEAD
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],
 <<<<<<< HEAD
               'start': startyear, 'end': endyear, 'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 40}
@@ -625,6 +672,12 @@ def SearchCommandFunction():
 >>>>>>> sunmee
     totalnum = int(OpenURL(queryp))
     totalpage = int(totalnum / 40) + 1
+=======
+    queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
+              'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 20}
+    totalnum = int(OpenURL(queryp))
+    totalpage = int(totalnum / 20) + 1
+>>>>>>> 190611_exe
     paget = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = paget)
 
