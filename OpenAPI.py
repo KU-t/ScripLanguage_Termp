@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 from urllib.request import  urlopen
 
+=======
+from urllib.request import urlopen
+>>>>>>> 190611_exe
 from urllib.parse import quote_plus, urlencode, unquote
 from tkinter import*
 from tkinter import font
@@ -108,7 +112,6 @@ def ComboboxSearch_ABCInit():
     AreaEntry.place(x=60, y=85)
     AreaEntry.set("지역선택")
 
-
     BrandText = Label(window, text="브랜드  ", font=normalFont)
     BrandText.place(x=150, y=80)
     BrandEntry = ttk.Combobox(window, width=12, height=15, textvariable=str)
@@ -117,7 +120,6 @@ def ComboboxSearch_ABCInit():
     BrandEntry.current(0)
     BrandEntry.place(x=210, y=84)
     BrandEntry.set("브랜드선택")
-
 
     ColorText = Label(window, text="색상  ", font=normalFont)
     ColorText.place(x=330, y=80)
@@ -171,7 +173,6 @@ def SpindoxSearch_YMDInit():
 
 def WindowScreen():
     global ResultList
-    global querye
     global DetailEntry
 
     DFont = font.Font(window, size=10, family='Consolas')
@@ -203,9 +204,7 @@ def WindowScreen():
     ImageText = Label(window, text="[디데일 정보]", font=normalFont)
     ImageText.place(x=500, y=372)
 
-    ResultImage = Listbox(window, font=normalFont, width=47, height=9,
-                         yscrollcommand=ResultBoxScrollbar.set,
-                         xscrollcommand=ListBoxHorizon.set)
+    ResultImage = Listbox(window, font=normalFont, width=47, height=9, yscrollcommand=ResultBoxScrollbar.set, xscrollcommand=ListBoxHorizon.set)
 
     ResultImage.place(x=500, y=170)
 
@@ -273,25 +272,24 @@ class WindowButtons:
 
 #ListPageButton command
     def PageUP(self):
-        if queryp['page'] < totalpage:
-           queryp['page']  = queryp['page'] +1
-           OpenURL(queryp)
-           paget = str(queryp['page']) + "/" + str(totalpage)
-           PageText.configure(text=paget)
+        if Datas['page'] < totalpage:
+           Datas['page']  = Datas['page'] +1
+           OpenURL(Datas)
+           currpage = str(Datas['page']) + "/" + str(totalpage)
+           PageText.configure(text=currpage)
 
     def PageDOWN(self):
-        if queryp['page'] > 1:
-           queryp['page']  = queryp['page'] -1
-           OpenURL(queryp)
-           paget = str(queryp['page']) + "/" + str(totalpage)
-           PageText.configure(text=paget)
+        if Datas['page'] > 1:
+           Datas['page']  = Datas['page'] -1
+           OpenURL(Datas)
+           currpage = str(Datas['page']) + "/" + str(totalpage)
+           PageText.configure(text=currpage)
 
 
     def EMailButtonMiniWindow(self):
         global popip
         global emailaddress
         global emailsendbutton
-
 
         popip = Toplevel(window)
         popip.geometry("320x160")
@@ -315,6 +313,7 @@ class WindowButtons:
         EmailSend.place(x=230, y=120)
 
 
+<<<<<<< HEAD
 
 
 def OpenDetailURL(qeueryp):
@@ -325,23 +324,35 @@ def OpenDetailURL(qeueryp):
     query = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): qeueryp['id'], quote_plus('FD_SN'): qeueryp['num']})
 
     tree = etree.parse(urlopen(urlDetail + query))
+=======
+def OpenDetailURL(phonedata):
+    global policepos
+    global NoImageText
+
+    DetailEntry.delete('1.0', END)
+    URLs = '?' + urlencode({quote_plus('ServiceKey'): key, quote_plus('ATC_ID'): phonedata['id'], quote_plus('FD_SN'): phonedata['num']})
+    tree = etree.parse(urlopen(urlDetail + URLs))
+>>>>>>> 190611_exe
     root = tree.getroot()
     body = root[1]
     item = body[0]
 
+<<<<<<< HEAD
     global NoImageText
+=======
+>>>>>>> 190611_exe
     NoImageText = item.findtext('fdFilePathImg')
     if NoImageText == "https://www.lost112.go.kr/lostnfs/images/sub/img04_no_img.gif" :
         NoImageText = "이미지가 없습니다."
 
     state = "보관상태\t:" + item.findtext('csteSteNm') + "\n"
-    place = "보관장소\t: " +  item.findtext('depPlace') + "\n"
-    getplace = "습득장소\t: " +  item.findtext('fdPlace') + "\n"
-    model = "모델\t: " +  item.findtext('mdcd') + "\n"
-    getday = "습득일자\t: " +  item.findtext('fdYmd') + "\n"
-    tel = "전화번호\t: " +  item.findtext('tel') + "\n"
+    place = "보관장소\t: " + item.findtext('depPlace') + "\n"
+    getplace = "습득장소\t: " + item.findtext('fdPlace') + "\n"
+    model = "모델\t: " + item.findtext('mdcd') + "\n"
+    getday = "습득일자\t: " + item.findtext('fdYmd') + "\n"
+    tel = "전화번호\t: " + item.findtext('tel') + "\n"
     uniq = item.findtext('uniq')
-    position = uniq[7:]
+    policepos = uniq[7:]
 
     totaltext = state + place + getplace + model + getday + tel + "\n" + uniq
 
@@ -366,20 +377,20 @@ def OpenDetailURL(qeueryp):
     imagelabel.place(x=500, y=170)
 
 
-def OpenURL(queryp):
+def OpenURL(Datas):
 
     global ResultForDetail
-    query = '?' + urlencode({quote_plus('ServiceKey'): queryp['keynum'], quote_plus('COL_CD'): queryp['Color'],
-                             quote_plus('FD_LCT_CD'): queryp['Location'], quote_plus('START_YMD'): queryp['start'],
-                             quote_plus('END_YMD'): queryp['end'], quote_plus('PRDT_CL_CD_02'):queryp['Brand'],
-                             quote_plus('pageNo'): queryp['page'], quote_plus('numOfRows'): queryp['numOfRows'], })
+    URLs = '?' + urlencode({quote_plus('ServiceKey'): Datas['keynum'], quote_plus('COL_CD'): Datas['Color'],
+                             quote_plus('FD_LCT_CD'): Datas['Location'], quote_plus('START_YMD'): Datas['start'],
+                             quote_plus('END_YMD'): Datas['end'], quote_plus('PRDT_CL_CD_02'):Datas['Brand'],
+                             quote_plus('pageNo'): Datas['page'], quote_plus('numOfRows'): Datas['numOfRows'], })
 
-    tree = etree.parse(urlopen(urlArea + query))
+    tree = etree.parse(urlopen(urlArea + URLs))
     root = tree.getroot()
     body = root[1]
     items = body[0]
 
-    i =0
+    i = 0
     ResultForDetail = {}
     ResultList.delete(0, END)
 
@@ -436,9 +447,9 @@ def InitResultList():
 
 
 def onselect(evt):
-    w= evt.widget
-    index = int(w.curselection()[0])
-    OpenDetailURL( ResultForDetail[index])
+    picking = evt.widget
+    index = int(picking.curselection()[0])
+    OpenDetailURL(ResultForDetail[index])
 
 #commandfunctions
 
@@ -483,6 +494,7 @@ def InitOtherButton():
 
 def SendEmailCommandFunction():
 
+<<<<<<< HEAD
     import smtplib
     from email.mime.text import MIMEText
 
@@ -490,39 +502,47 @@ def SendEmailCommandFunction():
     port = "587"
     text = DetailEntry.get("1.0",'end-1c')
     msg = MIMEText(text)
+=======
+    smtp ="smtp.gmail.com"
+    portnum = "587"
+    text = DetailEntry.get("1.0", 'end-1c')
+    message = MIMEText(text)
+>>>>>>> 190611_exe
     sender = "tjdtjsal96@naver.com"
     recipient = emailaddress.get() + "@" + emailsendbutton.get()
-    msg['Subject'] = "당신의 분실된 핸드폰 정보입니다."
-    msg['From'] = sender
-    msg['To'] = recipient
-    s = smtplib.SMTP(smtpHost, port)
-    s.ehlo()
-    s.starttls()
-    s.ehlo()
-    s.login("tjdtjsal960723@gmail.com", "Sun_mee9113")
-    s.sendmail(sender, [recipient], msg.as_string())
-    s.close()
+    message['Subject'] = "당신의 분실된 핸드폰 정보입니다."
+    message['From'] = sender
+    message['To'] = recipient
+    server = smtplib.SMTP(smtp, portnum)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login("tjdtjsal960723@gmail.com", "Sun_mee9113")
+    server.sendmail(sender, [recipient], message.as_string())
+    server.close()
     popip.destroy()
 
 
 def ShowMapCommandFunction():
-    global position
+    global policepos
     global file
 
     for i in range(20):
-       if position[i] == '에':
-          position = position[0:i]
+       if policepos[i] == '에':
+          policepos = policepos[0:i]
           break
 
     posx, posy = -1, -1
+
     for pos in POSITIONCode:
-       if pos[0] == position:
+       if pos[0] == policepos:
           posx, posy = pos[1], pos[2]
           break
+
     if posx != -1 and posy != -1:
 
        map = folium.Map(location=[posx, posy], zoom_start=13)
-       folium.Marker([posx, posy], popup=position).add_to(map)
+       folium.Marker([posx, posy], popup=policepos).add_to(map)
        file = 'map.html'
        map.save(file)
        print(type(map))
@@ -532,7 +552,7 @@ def ShowMapCommandFunction():
 def SearchCommandFunction():
     global pageNum
     global totalpage
-    global queryp
+    global Datas
 
     SY = SearchStartYearEntry.get()
     SM = SearchStartMonthEntry.get()
@@ -554,14 +574,23 @@ def SearchCommandFunction():
     area = AreaEntry.get()
     color = ColorEntry.get()
     pageNum= 1
+<<<<<<< HEAD
 
     queryp = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
+=======
+    Datas = {'keynum': key, 'Color': ColorCode[color], 'Location': AreaCode[area],'start': startyear, 'end': endyear,
+>>>>>>> 190611_exe
               'Brand': BrandCode[brand], 'page': pageNum, 'numOfRows': 20}
-    totalnum = int(OpenURL(queryp))
+    totalnum = int(OpenURL(Datas))
     totalpage = int(totalnum / 20) + 1
+<<<<<<< HEAD
 
     paget = str(pageNum) +"/"+ str(totalpage)
     PageText.configure(text = paget)
+=======
+    currpage = str(pageNum) +"/"+ str(totalpage)
+    PageText.configure(text = currpage)
+>>>>>>> 190611_exe
 
 #######################################################
 def ShowWindow():
